@@ -8,7 +8,7 @@ Version:	20101029
 Release:	3
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://github.com/cosmocode/%{plugin}/tarball/master#/%{plugin}.tgz
+Source0:	http://github.com/cosmocode/%{plugin}/tarball/master?/%{plugin}.tgz
 # Source0-md5:	742bade615520592ceaa711c0db13469
 URL:		http://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
