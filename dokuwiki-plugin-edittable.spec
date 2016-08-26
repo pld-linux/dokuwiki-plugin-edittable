@@ -1,19 +1,21 @@
+%define		subver	2015-06-17
+%define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
-%define		php_min_version 5.0.0
+%define		php_min_version 5.3.0
 %include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki edittable plugin
 Summary(pl.UTF-8):	Wtyczka edittable dla DokuWiki
 Name:		dokuwiki-plugin-%{plugin}
-Version:	20140618
+Version:	%{ver}
 Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	https://github.com/cosmocode/%{plugin}/archive/master/%{plugin}-%{version}.tar.gz
-# Source0-md5:	ad922f178da8867f9d38b490633286d6
-URL:		http://www.dokuwiki.org/plugin:edittable
+Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
+# Source0-md5:	557d632e82389b8a94d88602387f5e92
+URL:		https://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
-Requires:	dokuwiki >= 20131208
+Requires:	dokuwiki >= 20150810
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(pcre)
 BuildArch:	noarch
@@ -34,7 +36,7 @@ mv %{plugin}-*/{*,.??*} .
 %build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
-	: %%{version} mismatch
+	: version mismatch
 	exit 1
 fi
 
