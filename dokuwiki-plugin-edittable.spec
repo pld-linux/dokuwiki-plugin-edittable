@@ -1,4 +1,4 @@
-%define		subver	2015-06-17
+%define		subver	2016-10-07
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
 %define		php_min_version 5.3.0
@@ -11,7 +11,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
-# Source0-md5:	557d632e82389b8a94d88602387f5e92
+# Source0-md5:	909c60e3520d05dc2e8527837c3dde08
 URL:		https://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
@@ -33,8 +33,20 @@ Plugin that provides a visual table editing and inserting interfac
 %setup -qc
 mv %{plugin}-*/{*,.??*} .
 
+# no ui testing here
+rm -r _jstest
+# not needed with rpm packaging
+rm deleted.files
+# npm
+rm package.json
+
 %build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
+
+# XXX: temp hack, upstream tagged it wrong
+# https://github.com/cosmocode/edittable/issues/118
+[ "$version" = "2016-10-06" ] && version=2016-10-07
+
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
 	: version mismatch
 	exit 1
