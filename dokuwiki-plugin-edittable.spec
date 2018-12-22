@@ -1,7 +1,7 @@
-%define		subver	2016-10-07
+%define		subver	2018-04-24
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
-%define		php_min_version 5.3.0
+%define		php_min_version 5.6.0
 %include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki edittable plugin
 Summary(pl.UTF-8):	Wtyczka edittable dla DokuWiki
@@ -11,7 +11,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
-# Source0-md5:	909c60e3520d05dc2e8527837c3dde08
+# Source0-md5:	9a7944c1e77595397e1db93a7e79aadb
 URL:		https://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.520
@@ -39,16 +39,12 @@ rm -r _jstest
 rm deleted.files
 # npm
 rm package.json
+rm .eslintrc.js
 
 %build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
-
-# XXX: temp hack, upstream tagged it wrong
-# https://github.com/cosmocode/edittable/issues/118
-[ "$version" = "2016-10-06" ] && version=2016-10-07
-
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
-	: version mismatch
+	: %%{version} mismatch
 	exit 1
 fi
 
@@ -78,7 +74,9 @@ fi
 %{plugindir}/*.less
 %{plugindir}/*.txt
 %{plugindir}/action
+%{plugindir}/conf
 %{plugindir}/images
 %{plugindir}/less
+%{plugindir}/lib
 %{plugindir}/renderer
 %{plugindir}/script
