@@ -2,7 +2,6 @@
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
 %define		php_min_version 5.6.0
-%include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki edittable plugin
 Summary(pl.UTF-8):	Wtyczka edittable dla DokuWiki
 Name:		dokuwiki-plugin-%{plugin}
