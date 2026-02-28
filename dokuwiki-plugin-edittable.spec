@@ -6,7 +6,7 @@ Summary:	DokuWiki edittable plugin
 Summary(pl.UTF-8):	Wtyczka edittable dla DokuWiki
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
