@@ -1,4 +1,4 @@
-%define		subver	2018-04-24
+%define		subver	2023-01-14
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
 %define		php_min_version 5.6.0
@@ -6,13 +6,14 @@ Summary:	DokuWiki edittable plugin
 Summary(pl.UTF-8):	Wtyczka edittable dla DokuWiki
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
-Release:	2
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
-# Source0-md5:	9a7944c1e77595397e1db93a7e79aadb
+# Source0-md5:	216b1054d8bfb3d98dd306c091942a31
 URL:		https://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
+BuildRequires:	rpmbuild(find_lang) >= 1.41
 BuildRequires:	rpmbuild(macros) >= 1.520
 Requires:	dokuwiki >= 20150810
 Requires:	php(core) >= %{php_min_version}
@@ -23,7 +24,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		dokuconf	/etc/webapps/dokuwiki
 %define		dokudir		/usr/share/dokuwiki
 %define		plugindir	%{dokudir}/lib/plugins/%{plugin}
-%define		find_lang 	%{_usrlibrpm}/dokuwiki-find-lang.sh %{buildroot}
 
 %description
 Plugin that provides a visual table editing and inserting interfac
@@ -32,13 +32,8 @@ Plugin that provides a visual table editing and inserting interfac
 %setup -qc
 mv %{plugin}-*/{*,.??*} .
 
-# no ui testing here
-rm -r _jstest
 # not needed with rpm packaging
 rm deleted.files
-# npm
-rm package.json
-rm .eslintrc.js
 
 %build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
@@ -52,9 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
 %{__rm} $RPM_BUILD_ROOT%{plugindir}/{README*,.travis.yml}
-%{__rm} -r $RPM_BUILD_ROOT%{plugindir}/_test
 
-%find_lang %{name}.lang
+%find_lang %{name}.lang --with-dokuwiki
 
 %clean
 rm -rf $RPM_BUILD_ROOT
