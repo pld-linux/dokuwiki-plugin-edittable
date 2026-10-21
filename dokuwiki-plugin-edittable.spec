@@ -1,4 +1,4 @@
-%define		subver	2023-01-14
+%define		subver	2026-09-24
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		edittable
 %define		php_min_version 5.6.0
@@ -10,7 +10,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://github.com/cosmocode/%{plugin}/archive/%{subver}/%{plugin}-%{version}.tar.gz
-# Source0-md5:	216b1054d8bfb3d98dd306c091942a31
+# Source0-md5:	e6a6a52a401d6d1199b4f796c60c08ae
 URL:		https://www.dokuwiki.org/plugin:edittable
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(find_lang) >= 1.41
@@ -34,6 +34,10 @@ mv %{plugin}-*/{*,.??*} .
 
 # not needed with rpm packaging
 rm deleted.files
+rm -r .github
+rm .gitignore
+rm package-lock.json
+rm eslint.config.js
 
 %build
 version=$(awk '/^date/{print $2}' plugin.info.txt)
@@ -46,7 +50,7 @@ fi
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-%{__rm} $RPM_BUILD_ROOT%{plugindir}/{README*,.travis.yml}
+%{__rm} $RPM_BUILD_ROOT%{plugindir}/README*
 
 %find_lang %{name}.lang --with-dokuwiki
 
